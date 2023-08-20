@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MensajesService } from './mensajes/mensajes.service';
 import { Mensaje } from './mensajes/entities/mensaje.entity';
+import { AppController } from './app.controller';
+import { MensajesController } from './mensajes/mensajes.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -17,7 +20,8 @@ import { Mensaje } from './mensajes/entities/mensaje.entity';
     }),
     TypeOrmModule.forFeature([Mensaje])
   ],
-  providers: [MensajesService],
+  controllers: [AppController, MensajesController],
+  providers: [AppService, MensajesService],
 })
 
 export class AppModule {}

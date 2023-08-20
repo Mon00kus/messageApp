@@ -1,8 +1,7 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { CreateMensajeDto } from './dto/create-mensaje-dto/create-mensaje-dto';
 import { MensajesService } from './mensajes.service';
-import { response } from 'express';
-import { promises } from 'dns';
+
 
 @Controller('mensajes')
 export class MensajesController {
@@ -14,7 +13,7 @@ export class MensajesController {
     }
 
     @Post()
-    create (@Body() createMessageDto : CreateMensajeDto, @Res() response){
+    post (@Body() createMessageDto : CreateMensajeDto, @Res() response){
         this.mensajesServices.createMessage(createMessageDto).then( mensaje => {
             response.status(HttpStatus.CREATED).json(mensaje);
         }).catch(()=>{            
@@ -23,7 +22,7 @@ export class MensajesController {
     }
 
     @Get()
-    getAll(@Res() response)
+    get(@Res() response)
     {
         this.mensajesServices.getAll().then(mesaggeList=>{
             response.status(HttpStatus.OK).json(mesaggeList);
@@ -42,7 +41,7 @@ export class MensajesController {
     }
 
     @Delete(':id')
-    remove(@Res() response, @Param('id') idMensaje ){
+    delete(@Res() response, @Param('id') idMensaje ){
         this.mensajesServices.deleteMessage(idMensaje).then(res=>{
             response.status(HttpStatus.OK).json(res);
         }).catch(()=>{
