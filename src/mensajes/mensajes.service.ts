@@ -11,25 +11,25 @@ export class MensajesService {
      */
     constructor(@InjectRepository(Mensaje) private readonly mensajeRepository : Repository<Mensaje>) {}
 
-    async getAll(){
+    async getAll() : Promise<Mensaje[]>{
         return await this.mensajeRepository.find();
     }
 
-    async createMessage(newMessage : CreateMensajeDto){
+    async createMessage(newMessage : CreateMensajeDto) : Promise<Mensaje>{
        const nuevo = new Mensaje();
        nuevo.message = newMessage.message;
        nuevo.nick = newMessage.nick;
        return await this.mensajeRepository.save(nuevo);
     }
 
-    async updateMessage(idMessage: number, messageToUpdate : CreateMensajeDto){
+    async updateMessage(idMessage: number, messageToUpdate : CreateMensajeDto): Promise<Mensaje>{
         const messageAActualizar = await this.mensajeRepository.findOneById(idMessage);
         messageAActualizar.nick = messageToUpdate.nick;
         messageAActualizar.message = messageToUpdate.message;
         return await this.mensajeRepository.save(messageAActualizar);
     }
 
-    async deleteMessage(idMessage : number){
+    async deleteMessage(idMessage : number) : Promise<any>{
         return await this.mensajeRepository.delete(idMessage);
     }
 }
